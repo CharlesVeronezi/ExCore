@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Backend/">
+    <Project Path="src/Backend/SagiCore.API/SagiCore.API.csproj" Id="d451f915-df58-4c24-a30d-e1a2b1d92c1e" />
+    <Project Path="src/Backend/SagiCore.Application/SagiCore.Application.csproj" Id="f8f8e51c-c450-44fb-b46f-d3d762aae95e" />
+    <Project Path="src/Backend/SagiCore.Domain/SagiCore.Domain.csproj" Id="5e80df6b-5a49-4692-9e14-64865ff13590" />
+    <Project Path="src/Backend/SagiCore.Infrastructure/SagiCore.Infrastructure.csproj" Id="7b91e48d-39da-451d-a94c-64255d55cf8c" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/SagiCore.Communication/SagiCore.Communication.csproj" Id="9f1d068f-2c81-441d-8c55-79fa054e6836" />
+    <Project Path="src/Shared/SagiCore.Exceptions/SagiCore.Exceptions.csproj" Id="3fc3fa19-3c5a-4e45-a8bc-4c6768074d57" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>
