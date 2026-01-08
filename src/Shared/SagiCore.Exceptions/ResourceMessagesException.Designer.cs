@@ -70,6 +70,15 @@ namespace SagiCore.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Produto já cadastrado.
+        /// </summary>
+        public static string PRODUCT_ALREADY_REGISTERED {
+            get {
+                return ResourceManager.GetString("PRODUCT_ALREADY_REGISTERED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A descrição do produto não pode estar vazia..
         /// </summary>
         public static string PRODUTO_EMPTY {
