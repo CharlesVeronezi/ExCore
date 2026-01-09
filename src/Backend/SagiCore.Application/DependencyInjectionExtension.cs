@@ -7,7 +7,7 @@ namespace SagiCore.Application
     {
         public static void AddApplication(this IServiceCollection services)
         {
-
+            AddUseCases(services);
         }
 
         private static void AddUseCases(IServiceCollection services)
