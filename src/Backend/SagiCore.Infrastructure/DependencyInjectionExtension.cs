@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SagiCore.Domain.Repositories;
 using SagiCore.Infrastructure.DataAccess;
@@ -8,17 +9,16 @@ namespace SagiCore.Infrastructure
 {
     public static class DependencyInjectionExtension
     {
-        public static void AddInfrastructure(this IServiceCollection services)
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            AddDbContext(services);
+            var connectionString = configuration.GetConnectionString("Connection");
+
+            AddDbContext(services, connectionString);
             AddRepositories(services);
         }
 
-        private static void AddDbContext(IServiceCollection service)
+        private static void AddDbContext(IServiceCollection service, string connectionString)
         {
-            // Configurar string para conexão com o banco de dados
-            var connectionString = "";
-
             service.AddDbContext<SagiCoreDbContext>(dbContextOptions =>
             {
                 dbContextOptions.UseNpgsql(connectionString);
