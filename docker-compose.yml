@@ -1,0 +1,28 @@
+services:
+  pgadmin_service:
+    image: dpage/pgadmin4
+    container_name: sagicore-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: charles.v@sygecom.com.br
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "15432:80"
+    networks:
+      - my-network
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+
+  postgres_service:
+    image: postgres
+    container_name: sagicore-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
