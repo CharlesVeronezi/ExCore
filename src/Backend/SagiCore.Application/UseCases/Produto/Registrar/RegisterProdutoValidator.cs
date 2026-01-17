@@ -4,7 +4,7 @@ using SagiCore.Exceptions;
 
 namespace SagiCore.Application.UseCases.Produto.Registrar
 {
-    public class RegisterProdutoValidator : AbstractValidator<RequestRegistrarProdutoJson>
+    public class RegisterProdutoValidator : AbstractValidator<RequestRegisterProdutoJson>
     {
         public RegisterProdutoValidator() 
         {

@@ -1,6 +1,7 @@
 using SagiCore.API.Filters;
 using SagiCore.Application;
 using SagiCore.Infrastructure;
+using SagiCore.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,4 +33,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase();
+
 app.Run();
+
+void MigrateDatabase()
+{
+    var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    DatabaseMigration.Migrate(serviceScope.ServiceProvider);
+}

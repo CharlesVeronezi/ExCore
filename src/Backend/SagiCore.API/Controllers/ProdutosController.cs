@@ -10,10 +10,10 @@ namespace SagiCore.API.Controllers
     public class ProdutosController : ControllerBase
     {
         [HttpPost]
-        [ProducesResponseType(typeof(ResponseProdutoRegistradoJson), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ResponseRegisteredProdutoJson), StatusCodes.Status201Created)]
         public async Task<IActionResult> Registrar(
             [FromServices]IRegistrarProdutoUseCase useCase,
-            [FromBody]RequestRegistrarProdutoJson request)
+            [FromBody]RequestRegisterProdutoJson request)
         {
 
             var result = await useCase.Executar(request);

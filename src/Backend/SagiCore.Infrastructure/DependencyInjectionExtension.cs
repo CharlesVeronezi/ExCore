@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentMigrator.Runner;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SagiCore.Domain.Repositories;
 using SagiCore.Infrastructure.DataAccess;
 using SagiCore.Infrastructure.DataAccess.Repositories;
+using System.Reflection;
 
 namespace SagiCore.Infrastructure
 {
@@ -14,6 +16,7 @@ namespace SagiCore.Infrastructure
             var connectionString = configuration.GetConnectionString("Connection");
 
             AddDbContext(services, connectionString);
+            AddFluentMigrator(services, connectionString);
             AddRepositories(services);
         }
 
@@ -32,6 +35,16 @@ namespace SagiCore.Infrastructure
 
             service.AddScoped<IProdutoWriteRepository, ProdutoRepository>();
             service.AddScoped<IProdutoReadRepository, ProdutoRepository>();
+        }
+    
+        private static void AddFluentMigrator(IServiceCollection service, string connectionString)
+        {
+            service.AddFluentMigratorCore().ConfigureRunner(options =>
+            {
+                options.AddPostgres()
+                       .WithGlobalConnectionString(connectionString)
+                       .ScanIn(Assembly.Load("SagiCore.Infrastructure")).For.All();
+            });
         }
     }
 }
