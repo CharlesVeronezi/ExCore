@@ -10,11 +10,11 @@ namespace SagiCore.Infrastructure.DataAccess.Repositories
 
         public ProdutoRepository(SagiCoreDbContext dbContext) => _dbcontext = dbContext;
 
-        public async Task Add(Produto produto) => await _dbcontext.Produtos.AddAsync(produto);
+        public async Task Add(Produto produto) => await _dbcontext.Produto.AddAsync(produto);
 
         public async Task<bool> ExisteProdutoComCodproRepetido(string codpro, string subcod)
         {
-            return await _dbcontext.Produtos.AnyAsync(p => p.codpro.Equals(codpro) && p.subcod.Equals(subcod));
+            return await _dbcontext.Produto.AnyAsync(p => p.codpro.Equals(codpro) && p.subcod.Equals(subcod));
             
         }
     }

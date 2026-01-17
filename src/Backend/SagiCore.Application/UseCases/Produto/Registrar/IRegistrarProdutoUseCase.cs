@@ -5,6 +5,6 @@ namespace SagiCore.Application.UseCases.Produto.Registrar
 {
     public interface IRegistrarProdutoUseCase
     {
-        public Task<ResponseProdutoRegistradoJson> Executar(RequestRegistrarProdutoJson request);
+        public Task<ResponseRegisteredProdutoJson> Executar(RequestRegisterProdutoJson request);
     }
 }

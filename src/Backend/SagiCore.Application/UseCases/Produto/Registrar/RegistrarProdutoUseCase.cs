@@ -22,7 +22,7 @@ namespace SagiCore.Application.UseCases.Produto.Registrar
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseProdutoRegistradoJson> Executar(RequestRegistrarProdutoJson request)
+        public async Task<ResponseRegisteredProdutoJson> Executar(RequestRegisterProdutoJson request)
         {
             // 1- Validar a request
             // 2- Mapear a request em uma entidade
@@ -44,12 +44,13 @@ namespace SagiCore.Application.UseCases.Produto.Registrar
                 codcat = request.codcat,
                 tipo_pesquisa = request.tipo_pesquisa,
                 codref1 = request.codref1,
+                codref2 = request.codref2,
             };
 
             await _produtoWriteRepository.Add(produto);
             await _unitOfWork.Commit();
 
-            return new ResponseProdutoRegistradoJson
+            return new ResponseRegisteredProdutoJson
             {
                 codpro = request.codpro,
                 subcod = request.subcod,
@@ -57,7 +58,7 @@ namespace SagiCore.Application.UseCases.Produto.Registrar
             };
         }
 
-        private async Task Validar(RequestRegistrarProdutoJson request)
+        private async Task Validar(RequestRegisterProdutoJson request)
         {
             // Validação das propriedades da request
 

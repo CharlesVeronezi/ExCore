@@ -1,24 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentMigrator.Runner;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SagiCore.Domain.Repositories;
 using SagiCore.Infrastructure.DataAccess;
 using SagiCore.Infrastructure.DataAccess.Repositories;
+using System.Reflection;
 
 namespace SagiCore.Infrastructure
 {
     public static class DependencyInjectionExtension
     {
-        public static void AddInfrastructure(this IServiceCollection services)
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            AddDbContext(services);
+            var connectionString = configuration.GetConnectionString("Connection");
+
+            AddDbContext(services, connectionString);
+            AddFluentMigrator(services, connectionString);
             AddRepositories(services);
         }
 
-        private static void AddDbContext(IServiceCollection service)
+        private static void AddDbContext(IServiceCollection service, string connectionString)
         {
-            // Configurar string para conexão com o banco de dados
-            var connectionString = "";
-
             service.AddDbContext<SagiCoreDbContext>(dbContextOptions =>
             {
                 dbContextOptions.UseNpgsql(connectionString);
@@ -32,6 +35,16 @@ namespace SagiCore.Infrastructure
 
             service.AddScoped<IProdutoWriteRepository, ProdutoRepository>();
             service.AddScoped<IProdutoReadRepository, ProdutoRepository>();
+        }
+    
+        private static void AddFluentMigrator(IServiceCollection service, string connectionString)
+        {
+            service.AddFluentMigratorCore().ConfigureRunner(options =>
+            {
+                options.AddPostgres()
+                       .WithGlobalConnectionString(connectionString)
+                       .ScanIn(Assembly.Load("SagiCore.Infrastructure")).For.All();
+            });
         }
     }
 }
