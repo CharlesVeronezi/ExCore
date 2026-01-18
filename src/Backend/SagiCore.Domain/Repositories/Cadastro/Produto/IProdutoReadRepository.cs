@@ -1,4 +1,4 @@
-﻿namespace SagiCore.Domain.Repositories
+﻿namespace SagiCore.Domain.Repositories.Cadastro.Produto
 {
     public interface IProdutoReadRepository
     {

@@ -2,7 +2,7 @@
 using SagiCore.Communication.Requests;
 using SagiCore.Exceptions;
 
-namespace SagiCore.Application.UseCases.Produto.Registrar
+namespace SagiCore.Application.UseCases.Cadastro.Produto.Registrar
 {
     public class RegisterProdutoValidator : AbstractValidator<RequestRegisterProdutoJson>
     {

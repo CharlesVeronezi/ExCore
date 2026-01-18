@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SagiCore.Domain.Entities;
+using SagiCore.Domain.Entities.Cadastro;
 
 namespace SagiCore.Infrastructure.DataAccess
 {

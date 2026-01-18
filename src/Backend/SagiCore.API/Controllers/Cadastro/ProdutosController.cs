@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SagiCore.Application.UseCases.Produto.Registrar;
+using SagiCore.Application.UseCases.Cadastro.Produto.Registrar;
 using SagiCore.Communication.Requests;
 using SagiCore.Communication.Responses;
 
-namespace SagiCore.API.Controllers
+namespace SagiCore.API.Controllers.Cadastro
 {
-    [Route("[controller]")]
+    [Route("/cadastro/[controller]")]
     [ApiController]
     public class ProdutosController : ControllerBase
     {
         [HttpPost]
         [ProducesResponseType(typeof(ResponseRegisteredProdutoJson), StatusCodes.Status201Created)]
         public async Task<IActionResult> Registrar(
-            [FromServices]IRegistrarProdutoUseCase useCase,
+            [FromServices]IRegisterProdutoUseCase useCase,
             [FromBody]RequestRegisterProdutoJson request)
         {
 
