@@ -1,18 +1,19 @@
 ﻿using SagiCore.Communication.Requests;
 using SagiCore.Communication.Responses;
 using SagiCore.Domain.Repositories;
+using SagiCore.Domain.Repositories.Cadastro.Produto;
 using SagiCore.Exceptions;
 using SagiCore.Exceptions.ExceptionsBase;
 
-namespace SagiCore.Application.UseCases.Produto.Registrar
+namespace SagiCore.Application.UseCases.Cadastro.Produto.Registrar
 {
-    public class RegistrarProdutoUseCase : IRegistrarProdutoUseCase
+    public class RegisterProdutoUseCase : IRegisterProdutoUseCase
     {
         private readonly IProdutoWriteRepository _produtoWriteRepository;
         private readonly IProdutoReadRepository _produtoReadRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RegistrarProdutoUseCase(
+        public RegisterProdutoUseCase(
             IProdutoWriteRepository produtoWriteRepository, 
             IProdutoReadRepository produtoReadRepository,
             IUnitOfWork unitOfWork)
@@ -32,7 +33,7 @@ namespace SagiCore.Application.UseCases.Produto.Registrar
 
             // Automapper pode ser usado aqui para mapear a request para a entidade
             // porem agora é pago, Mapster é uma opção a ser estudada
-            var produto = new Domain.Entities.Produto
+            var produto = new Domain.Entities.Cadastro.Produto
             {
                 codpro = request.codpro,
                 subcod = request.subcod,

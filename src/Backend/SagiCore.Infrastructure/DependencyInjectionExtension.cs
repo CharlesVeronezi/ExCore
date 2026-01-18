@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SagiCore.Domain.Repositories;
+using SagiCore.Domain.Repositories.Cadastro.Produto;
 using SagiCore.Infrastructure.DataAccess;
-using SagiCore.Infrastructure.DataAccess.Repositories;
+using SagiCore.Infrastructure.DataAccess.Repositories.Cadastro;
 using System.Reflection;
 
 namespace SagiCore.Infrastructure

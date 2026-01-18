@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SagiCore.Application.UseCases.Produto.Registrar;
+using SagiCore.Application.UseCases.Cadastro.Produto.Registrar;
 
 namespace SagiCore.Application
 {
@@ -12,7 +12,7 @@ namespace SagiCore.Application
 
         private static void AddUseCases(IServiceCollection services)
         {
-            services.AddScoped<IRegistrarProdutoUseCase, RegistrarProdutoUseCase>();
+            services.AddScoped<IRegisterProdutoUseCase, RegisterProdutoUseCase>();
         }
     }
 }

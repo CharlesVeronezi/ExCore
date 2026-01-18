@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SagiCore.Domain.Entities;
-using SagiCore.Domain.Repositories;
+using SagiCore.Domain.Entities.Cadastro;
+using SagiCore.Domain.Repositories.Cadastro.Produto;
 
-namespace SagiCore.Infrastructure.DataAccess.Repositories
+namespace SagiCore.Infrastructure.DataAccess.Repositories.Cadastro
 {
     public class ProdutoRepository : IProdutoWriteRepository, IProdutoReadRepository
     {

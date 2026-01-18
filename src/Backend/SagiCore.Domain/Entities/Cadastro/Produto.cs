@@ -1,4 +1,4 @@
-﻿namespace SagiCore.Domain.Entities
+﻿namespace SagiCore.Domain.Entities.Cadastro
 {
     public class Produto
     {
