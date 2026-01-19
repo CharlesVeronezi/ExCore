@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using SagiCore.Communication.Requests;
+using SagiCore.Communication.Requests.Cadastro.Produto;
 using SagiCore.Exceptions;
 
-namespace SagiCore.Application.UseCases.Cadastro.Produto.Registrar
+namespace SagiCore.Application.UseCases.Cadastro.Produto.Register
 {
     public class RegisterProdutoValidator : AbstractValidator<RequestRegisterProdutoJson>
     {

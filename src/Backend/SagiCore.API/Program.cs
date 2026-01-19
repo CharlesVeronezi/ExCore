@@ -18,6 +18,9 @@ builder.Configuration.GetConnectionString("Connection");
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// Configurar Npgsql para aceitar DateTime sem Kind específico
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

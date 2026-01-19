@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SagiCore.Communication.Responses
+﻿namespace SagiCore.Communication.Requests.Cadastro.Produto
 {
-    public class ResponseRegisteredProdutoJson
+    public class RequestRegisterProdutoJson
     {
         public string codpro { get; set; } = string.Empty;
         public string produto { get; set; } = string.Empty;
