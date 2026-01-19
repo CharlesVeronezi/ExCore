@@ -1,11 +1,11 @@
-﻿using SagiCore.Communication.Requests;
-using SagiCore.Communication.Responses;
+﻿using SagiCore.Communication.Requests.Cadastro.Produto;
+using SagiCore.Communication.Responses.Cadastro.Produto;
 using SagiCore.Domain.Repositories;
 using SagiCore.Domain.Repositories.Cadastro.Produto;
 using SagiCore.Exceptions;
 using SagiCore.Exceptions.ExceptionsBase;
 
-namespace SagiCore.Application.UseCases.Cadastro.Produto.Registrar
+namespace SagiCore.Application.UseCases.Cadastro.Produto.Register
 {
     public class RegisterProdutoUseCase : IRegisterProdutoUseCase
     {
@@ -23,13 +23,13 @@ namespace SagiCore.Application.UseCases.Cadastro.Produto.Registrar
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ResponseRegisteredProdutoJson> Executar(RequestRegisterProdutoJson request)
+        public async Task<ResponseRegisteredProdutoJson> Execute(RequestRegisterProdutoJson request)
         {
             // 1- Validar a request
             // 2- Mapear a request em uma entidade
             // 3- Salvar a entidade no banco de dados
 
-            await Validar(request);
+            await Validate(request);
 
             // Automapper pode ser usado aqui para mapear a request para a entidade
             // porem agora é pago, Mapster é uma opção a ser estudada
@@ -59,7 +59,7 @@ namespace SagiCore.Application.UseCases.Cadastro.Produto.Registrar
             };
         }
 
-        private async Task Validar(RequestRegisterProdutoJson request)
+        private async Task Validate(RequestRegisterProdutoJson request)
         {
             // Validação das propriedades da request
 

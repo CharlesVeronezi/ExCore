@@ -15,7 +15,7 @@ Este documento descreve o plano de desenvolvimento do projeto SagiCore, a migra�
 | Primeira rota                             | ✅ Concluído    | 100%      |
 | Rota real pedido de venda                 | 🔄 Em Andamento | 20%       |
 | Config banco e injeção de dependencia     | ✅ Concluído    | 100%      |
-| Criar estrutura de pastas por módulo      | 🔄 Em Andamento | 50%       |
+| Criar estrutura de pastas por módulo      | 🔄 Em Andamento | 80%       |
 | Atualizar namespaces e imports            | ⏳ Pendente     | 0%        |
 | Docker Compose                            | ✅ Concluído    | 100%      |
 | Adicionar Mapeamento (AutoMapper/Mapster) | ⏳ Pendente     | 0%        |

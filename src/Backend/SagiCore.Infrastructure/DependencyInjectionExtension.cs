@@ -4,8 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SagiCore.Domain.Repositories;
 using SagiCore.Domain.Repositories.Cadastro.Produto;
+using SagiCore.Domain.Repositories.Operacional.PedidoVenda;
 using SagiCore.Infrastructure.DataAccess;
 using SagiCore.Infrastructure.DataAccess.Repositories.Cadastro;
+using SagiCore.Infrastructure.DataAccess.Repositories.Operacional;
 using System.Reflection;
 
 namespace SagiCore.Infrastructure
@@ -36,6 +38,9 @@ namespace SagiCore.Infrastructure
 
             service.AddScoped<IProdutoWriteRepository, ProdutoRepository>();
             service.AddScoped<IProdutoReadRepository, ProdutoRepository>();
+
+            service.AddScoped<IPedidoVendaWriteRepository, PedidoVendaRepository>();
+            service.AddScoped<IPedidoVendaReadRepository, PedidoVendaRepository>();
         }
     
         private static void AddFluentMigrator(IServiceCollection service, string connectionString)

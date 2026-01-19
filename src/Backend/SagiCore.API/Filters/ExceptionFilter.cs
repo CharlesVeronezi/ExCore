@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using SagiCore.Communication.Responses;
 using SagiCore.Exceptions;
 using SagiCore.Exceptions.ExceptionsBase;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
 
 namespace SagiCore.API.Filters
