@@ -1,4 +1,4 @@
-using SagiCore.API.Filters;
+ï»¿using SagiCore.API.Filters;
 using SagiCore.Cadastros.Application;
 using SagiCore.Cadastros.Infrastructure;
 using SagiCore.Shared.Application;
@@ -14,15 +14,11 @@ builder.Services.AddSwaggerGen();
 // Shared
 builder.Services.AddSharedApplication();
 
-// Módulos - Application
+// Modulos - Application
 builder.Services.AddCadastrosApplication();
-// builder.Services.AddOperacionalApplication();  // Futuro
-// builder.Services.AddFinanceiroApplication();   // Futuro
 
-// Módulos - Infrastructure
+// Modulos - Infrastructure
 builder.Services.AddCadastrosInfrastructure(builder.Configuration);
-// builder.Services.AddOperacionalInfrastructure(builder.Configuration);  // Futuro
-// builder.Services.AddFinanceiroInfrastructure(builder.Configuration);   // Futuro
 
 // Exception Filter
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));

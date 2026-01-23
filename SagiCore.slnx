@@ -1,7 +1,7 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/Core/">
-    <Project Path="SagiCore.API/SagiCore.API.csproj" Id="5faf751d-6ef1-4124-bf12-2ec2f59fec10" />
+    <Project Path="src/Core/SagiCore.API/SagiCore.API.csproj" Id="289476fc-c530-4539-b3e7-7bb81e7c5b25" />
     <Project Path="src/Core/SagiCore.Shared.Application/SagiCore.Shared.Application.csproj" Id="99345c01-5a54-43be-97c2-508bc843fed2" />
     <Project Path="src/Core/SagiCore.Shared.Domain/SagiCore.Shared.Domain.csproj" Id="5af21caf-36db-485c-81d0-fca5974463a9" />
     <Project Path="src/Core/SagiCore.Shared.Infrastructure/SagiCore.Shared.Infrastructure.csproj" Id="60480b6d-92d3-4ebe-aa3d-1b1f62f698b9" />
