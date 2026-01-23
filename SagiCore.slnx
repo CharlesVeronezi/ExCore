@@ -1,10 +1,16 @@
 <Solution>
   <Folder Name="/src/" />
-  <Folder Name="/src/Backend/">
-    <Project Path="src/Backend/SagiCore.API/SagiCore.API.csproj" Id="d451f915-df58-4c24-a30d-e1a2b1d92c1e" />
-    <Project Path="src/Backend/SagiCore.Application/SagiCore.Application.csproj" Id="f8f8e51c-c450-44fb-b46f-d3d762aae95e" />
-    <Project Path="src/Backend/SagiCore.Domain/SagiCore.Domain.csproj" Id="5e80df6b-5a49-4692-9e14-64865ff13590" />
-    <Project Path="src/Backend/SagiCore.Infrastructure/SagiCore.Infrastructure.csproj" Id="7b91e48d-39da-451d-a94c-64255d55cf8c" />
+  <Folder Name="/src/Core/">
+    <Project Path="SagiCore.API/SagiCore.API.csproj" Id="5faf751d-6ef1-4124-bf12-2ec2f59fec10" />
+    <Project Path="src/Core/SagiCore.Shared.Application/SagiCore.Shared.Application.csproj" Id="99345c01-5a54-43be-97c2-508bc843fed2" />
+    <Project Path="src/Core/SagiCore.Shared.Domain/SagiCore.Shared.Domain.csproj" Id="5af21caf-36db-485c-81d0-fca5974463a9" />
+    <Project Path="src/Core/SagiCore.Shared.Infrastructure/SagiCore.Shared.Infrastructure.csproj" Id="60480b6d-92d3-4ebe-aa3d-1b1f62f698b9" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Cadastros/">
+    <Project Path="src/Modules/Cadastros/SagiCore.Cadastros.Application/SagiCore.Cadastros.Application.csproj" Id="f9b73876-a884-4ca0-96a5-354bde14cfa5" />
+    <Project Path="src/Modules/Cadastros/SagiCore.Cadastros.Domain/SagiCore.Cadastros.Domain.csproj" Id="c9e1fe4c-08b8-472e-9155-fedb858d97cf" />
+    <Project Path="src/Modules/Cadastros/SagiCore.Cadastros.Infrastructure/SagiCore.Cadastros.Infrastructure.csproj" Id="26c86ca5-05ef-4571-babd-cd4846e8cdd8" />
   </Folder>
   <Folder Name="/src/Shared/">
     <Project Path="src/Shared/SagiCore.Communication/SagiCore.Communication.csproj" Id="9f1d068f-2c81-441d-8c55-79fa054e6836" />
