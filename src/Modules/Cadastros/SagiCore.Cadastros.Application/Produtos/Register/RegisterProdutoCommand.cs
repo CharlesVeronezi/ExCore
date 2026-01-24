@@ -6,7 +6,7 @@ namespace SagiCore.Cadastros.Application.Produtos.Register
     public record RegisterProdutoCommand(
         string Codpro,
         string Subcod,
-        string Descricao,
+        string Produto,
         string Unidade,
         string TipoProduto,
         string Ncm,

@@ -15,7 +15,7 @@ namespace SagiCore.Cadastros.Application.Produtos.Register
                 .NotEmpty()
                 .WithMessage(ResourceMessagesException.SUBCOD_EMPTY);
 
-            RuleFor(x => x.Descricao)
+            RuleFor(x => x.Produto)
                 .NotEmpty()
                 .WithMessage(ResourceMessagesException.PRODUTO_EMPTY)
                 .MaximumLength(60)
@@ -23,7 +23,13 @@ namespace SagiCore.Cadastros.Application.Produtos.Register
 
             RuleFor(x => x.Unidade)
                 .NotEmpty()
-                .MaximumLength(3);
+                .MaximumLength(3)
+                .MinimumLength(2);
+
+            RuleFor(x => x.Ncm)
+                .NotEmpty()
+                .MaximumLength(8)
+                .MinimumLength(8);
         }
     }
 }
