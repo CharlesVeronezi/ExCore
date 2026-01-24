@@ -99,11 +99,6 @@ namespace SagiCore.Cadastros.Infrastructure.Persistence.Configurations
             builder.Property(p => p.cat8309).HasColumnName("cat8309");
             builder.Property(p => p.tecnologia).HasColumnName("tecnologia").HasMaxLength(120);
             builder.Property(p => p.usar_mtr).HasColumnName("usar_mtr");
-            // Auditoria/base:
-            builder.Property(p => p.CriadoEm).HasColumnName("created_at");
-            builder.Property(p => p.AtualizadoEm).HasColumnName("updated_at");
-            builder.Property(p => p.CriadoPor).HasColumnName("created_by").HasMaxLength(50);
-            builder.Property(p => p.AtualizadoPor).HasColumnName("updated_by").HasMaxLength(50);
         }
     }
 }

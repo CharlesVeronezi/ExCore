@@ -41,7 +41,6 @@ namespace SagiCore.Cadastros.Application.Produtos.Register
                     new List<string> { ResourceMessagesException.PRODUCT_ALREADY_REGISTERED });
             }
 
-
             var produto = _mapper.Map<Produto>(request);
 
             await _produtoRepository.AddAsync(produto, cancellationToken);

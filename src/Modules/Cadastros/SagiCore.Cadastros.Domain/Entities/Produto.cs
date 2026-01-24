@@ -1,8 +1,7 @@
-﻿using SagiCore.Shared.Domain.Entities;
-
+﻿
 namespace SagiCore.Cadastros.Domain.Entities
 {
-    public class Produto : EntityBase
+    public class Produto
     {
         public string codpro { get; set; } = string.Empty;
         public string produto { get; set; } = string.Empty;
