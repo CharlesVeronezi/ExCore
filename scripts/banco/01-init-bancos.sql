@@ -1,0 +1,2 @@
+CREATE DATABASE nsa;
+CREATE DATABASE salmeron;

@@ -11,19 +11,70 @@ services:
       - my-network
     volumes:
       - ./pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - autentica_server
+      - banco_server
 
-  postgres_service:
+  # Servidor 1: AUTENTICA (tabela de conexões)
+  autentica_server:
     image: postgres
-    container_name: sagicore-postgres
+    container_name: AUTENTICA
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: sagicore
+      POSTGRES_DB: autentica
     ports:
-      - "5433:5432"
+      - "5432:5432" 
     networks:
       - my-network
+    volumes:
+      # Script para criar a tabela conexao_cliente_cloud
+      - ./scripts/autentica:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d autentica"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
+  # Servidor 2: BANCO (bancos dos clientes: nsa, salmeron)
+  banco_server:
+    image: postgres
+    container_name: BANCO
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres 
+    ports:
+      - "5433:5432" 
+    networks:
+      - my-network
+    volumes:
+      # Script para criar as databases nsa e salmeron
+      - ./scripts/banco:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrator:
+    build:
+      context: .
+      dockerfile: src/Tools/SagiCore.DbMigrator/Dockerfile
+    container_name: sagicore-migrator
+    environment:
+      # A connection string para ler o Autentica
+      ConnectionStrings__ConnectionAutentica: "Host=autentica_server;Port=5432;Database=autentica;Username=postgres;Password=postgres"
+    networks:
+      - my-network
+    depends_on:
+      autentica_server:
+        condition: service_healthy
+      banco_server:
+        condition: service_healthy
+    # Importante: Não reiniciar eternamente se acabar o trabalho
+    restart: "no"
+    
 networks:
   my-network:
     driver: bridge

@@ -1,7 +1,6 @@
 ﻿using SagiCore.API.Filters;
 using SagiCore.Cadastros.Application;
 using SagiCore.Cadastros.Infrastructure;
-using SagiCore.Cadastros.Infrastructure.Migrations;
 using SagiCore.Shared.Application;
 
 
@@ -28,8 +27,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    CadastrosModuleInitializer.Initialize(app.Services);
 }
 
 app.UseHttpsRedirection();

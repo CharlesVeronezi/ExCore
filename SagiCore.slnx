@@ -7,6 +7,9 @@
     <Project Path="src/Core/SagiCore.Shared.Infrastructure/SagiCore.Shared.Infrastructure.csproj" Id="60480b6d-92d3-4ebe-aa3d-1b1f62f698b9" />
   </Folder>
   <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Auth/">
+    <Project Path="src/Modules/Auth/SagiCore.Auth.Domain/SagiCore.Auth.Domain.csproj" Id="5f903a76-4b80-4e79-87aa-0982901d9515" />
+  </Folder>
   <Folder Name="/src/Modules/Cadastros/">
     <Project Path="src/Modules/Cadastros/SagiCore.Cadastros.Application/SagiCore.Cadastros.Application.csproj" Id="f9b73876-a884-4ca0-96a5-354bde14cfa5" />
     <Project Path="src/Modules/Cadastros/SagiCore.Cadastros.Domain/SagiCore.Cadastros.Domain.csproj" Id="c9e1fe4c-08b8-472e-9155-fedb858d97cf" />
@@ -15,6 +18,9 @@
   <Folder Name="/src/Shared/">
     <Project Path="src/Shared/SagiCore.Communication/SagiCore.Communication.csproj" Id="9f1d068f-2c81-441d-8c55-79fa054e6836" />
     <Project Path="src/Shared/SagiCore.Exceptions/SagiCore.Exceptions.csproj" Id="3fc3fa19-3c5a-4e45-a8bc-4c6768074d57" />
+  </Folder>
+  <Folder Name="/src/Tools/">
+    <Project Path="src/Tools/SagiCore.DbMigrator/SagiCore.DbMigrator.csproj" Id="f8fa1b0e-df09-4195-8f42-e0e9a06966f9" />
   </Folder>
   <Folder Name="/tests/" />
 </Solution>

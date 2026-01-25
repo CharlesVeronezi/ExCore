@@ -33,16 +33,6 @@ namespace SagiCore.Cadastros.Infrastructure
             services.AddScoped<IProdutoReadRepository>(sp => sp.GetRequiredService<IProdutoRepository>());
             services.AddScoped<IProdutoWriteRepository>(sp => sp.GetRequiredService<IProdutoRepository>());
 
-            // FluentMigrator Runner
-            services.AddFluentMigratorCore().ConfigureRunner(builder =>
-            {
-                builder
-                    .AddPostgres()
-                    .WithGlobalConnectionString(connectionString)
-                    // Carrega as migrations do assembly de Infrastructure
-                    .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations();
-            });
-
             return services;
         }
     }
