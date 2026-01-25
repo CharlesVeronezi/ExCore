@@ -1,0 +1,6 @@
+@SagiCore.API_HostAddress = http://localhost:5113
+
+GET {{SagiCore.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,103 @@
+﻿using FluentMigrator;
+
+namespace SagiCore.Cadastros.Infrastructure.Migrations.Versions
+{
+    
+    [Migration(1, "Criação das tabelas de produto, pedido de venda e itens do pedido de venda")]
+    public class Version20260122 : Migration
+    {
+        public override void Down()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Up()
+        {
+            Create.Table("cag_pro")
+                .WithColumn("codpro").AsString(6).NotNullable().WithDefaultValue("")
+                .WithColumn("produto").AsString(120).NotNullable().WithDefaultValue("")
+                .WithColumn("produto_complemento").AsString(500).NotNullable().WithDefaultValue("")
+                .WithColumn("subcod").AsString(1).NotNullable().WithDefaultValue("")
+                .WithColumn("subprod").AsString(6).NotNullable().WithDefaultValue("")
+                .WithColumn("un").AsString(3).NotNullable().WithDefaultValue("")
+                .WithColumn("codcat").AsInt32().NotNullable().WithDefaultValue(0)
+                .WithColumn("nomeest").AsString(255).NotNullable().WithDefaultValue("")
+                .WithColumn("comrec").AsString(1).NotNullable().WithDefaultValue("")
+                .WithColumn("codref1").AsString(25).NotNullable().WithDefaultValue("")
+                .WithColumn("codref2").AsString(25).NotNullable().WithDefaultValue("")
+                .WithColumn("codref3").AsString(25).NotNullable().WithDefaultValue("")
+                .WithColumn("codref4").AsString(25).NotNullable().WithDefaultValue("")
+                .WithColumn("codref5").AsString(25).NotNullable().WithDefaultValue("")
+                .WithColumn("ncm").AsString(10).NotNullable().WithDefaultValue("")
+                .WithColumn("empresa").AsString(int.MaxValue).NotNullable().WithDefaultValue("") // Memo
+                .WithColumn("peso_pro").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("peso_teorico").AsDecimal(19, 8).NotNullable().WithDefaultValue(0)
+                .WithColumn("tp_prod").AsString(2).NotNullable().WithDefaultValue("")
+                .WithColumn("md_precom").AsDecimal(19, 9).NotNullable().WithDefaultValue(0)
+                .WithColumn("md_preven").AsDecimal(19, 9).NotNullable().WithDefaultValue(0)
+                .WithColumn("bonus_prc").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("lotpad").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("taxa_conv").AsDecimal(6, 2).NotNullable().WithDefaultValue(0)
+                .WithColumn("altura").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("comprimento").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("largura").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_min1").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_max1").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_min2").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_max2").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_min3").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_max3").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_min4").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("preco_max4").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("peso_acima").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("prc_acima").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("peso_ac2").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("prc_ac2").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("peso_baixo").AsDecimal(18, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("prc_baixo").AsDecimal(15, 4).NotNullable().WithDefaultValue(0)
+                .WithColumn("aprovaped").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("usefis").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("codfis").AsString(6).NotNullable().WithDefaultValue("")
+                .WithColumn("subfis").AsString(1).NotNullable().WithDefaultValue("")
+                .WithColumn("ult_data").AsDate().Nullable()
+                .WithColumn("obs").AsString(int.MaxValue).NotNullable().WithDefaultValue("") // Memo
+                .WithColumn("diverso").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("rendimento").AsDecimal(5, 2).NotNullable().WithDefaultValue(0)
+                .WithColumn("cod_barras").AsString(255).NotNullable().WithDefaultValue("")
+                .WithColumn("tipo_barras").AsString(30).NotNullable().WithDefaultValue("")
+                .WithColumn("id_onu").AsInt32().NotNullable().WithDefaultValue(0)
+                .WithColumn("status").AsString(7).NotNullable().WithDefaultValue("")
+                .WithColumn("codcdc").AsString(20).NotNullable().WithDefaultValue("")
+                .WithColumn("bloq_inventario").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("mix_venda").AsString(10).NotNullable().WithDefaultValue("")
+                .WithColumn("nao_obriga_mtr").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("ativo_saida_ins").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("cor_producao").AsInt32().NotNullable().WithDefaultValue(0)
+                .WithColumn("usacompetencia").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("editavalorcusto").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("usoprecocusto").AsInt32().NotNullable().WithDefaultValue(0)
+                .WithColumn("tabela_servicos_codigo").AsString(10).NotNullable().WithDefaultValue("")
+                .WithColumn("nao_movimentar").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("dias_uso").AsInt32().Nullable()
+                .WithColumn("cad_usuario").AsString(25).Nullable()
+                .WithColumn("cad_data").AsDate().Nullable()
+                .WithColumn("pes_avulsa_serv").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("obriga_os_saida_ins").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("tipo_pesquisa").AsString(10).Nullable()
+                .WithColumn("id_subcategoria").AsInt32().NotNullable().WithDefaultValue(0)
+                .WithColumn("epi_com_ca").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("epi_tamanho").AsString(10).Nullable()
+                .WithColumn("liga").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("tipo_liga").AsString(4).NotNullable().WithDefaultValue("")
+                .WithColumn("solicitar_metragem_class").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("codigo_epi").AsInt64().NotNullable().WithDefaultValue(0)
+                .WithColumn("validade_epi").AsDate().Nullable()
+                .WithColumn("descricao_alternativa_exp").AsString(120).NotNullable().WithDefaultValue("")
+                .WithColumn("fator_conv_ex").AsDecimal(19, 5).NotNullable().WithDefaultValue(0)
+                .WithColumn("un_trib_ex").AsString(3).NotNullable().WithDefaultValue("")
+                .WithColumn("cat8309").AsBoolean().NotNullable().WithDefaultValue(false)
+                .WithColumn("tecnologia").AsString(120).NotNullable().WithDefaultValue("")
+                .WithColumn("usar_mtr").AsBoolean().NotNullable().WithDefaultValue(false);
+        }
+    }
+}

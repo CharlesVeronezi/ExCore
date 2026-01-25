@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\SagiCore.Shared.Application\SagiCore.Shared.Application.csproj" />
+    <ProjectReference Include="..\..\..\Shared\SagiCore.Communication\SagiCore.Communication.csproj" />
+    <ProjectReference Include="..\..\..\Shared\SagiCore.Exceptions\SagiCore.Exceptions.csproj" />
+    <ProjectReference Include="..\SagiCore.Cadastros.Domain\SagiCore.Cadastros.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
