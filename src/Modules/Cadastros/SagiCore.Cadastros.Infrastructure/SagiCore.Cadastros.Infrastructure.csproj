@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\SagiCore.Shared.Application\SagiCore.Shared.Application.csproj" />
     <ProjectReference Include="..\..\..\Core\SagiCore.Shared.Domain\SagiCore.Shared.Domain.csproj" />
     <ProjectReference Include="..\..\..\Core\SagiCore.Shared.Infrastructure\SagiCore.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\SagiCore.Cadastros.Domain\SagiCore.Cadastros.Domain.csproj" />

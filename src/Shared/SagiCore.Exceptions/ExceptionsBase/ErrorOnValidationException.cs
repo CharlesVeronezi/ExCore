@@ -1,10 +1,11 @@
 ﻿namespace SagiCore.Exceptions.ExceptionsBase
 {
+    [Serializable]
     public class ErrorOnValidationException : SagiCoreException
     {
-        public IList<string> ErrorMessages { get; set; }
+        public List<string> ErrorMessages { get; set; }
 
-        public ErrorOnValidationException(IList<string> errorMessages)
+        public ErrorOnValidationException(List<string> errorMessages) : base(string.Empty)
         {
             ErrorMessages = errorMessages;
         }

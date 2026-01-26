@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SagiCore.DbMigrator": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
