@@ -1,5 +1,4 @@
-﻿using FluentMigrator.Runner;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SagiCore.Cadastros.Domain.Repositories;
@@ -7,7 +6,6 @@ using SagiCore.Cadastros.Infrastructure.Persistence;
 using SagiCore.Cadastros.Infrastructure.Persistence.Repositories;
 using SagiCore.Shared.Domain.Repositories;
 using SagiCore.Shared.Infrastructure.Persistence;
-using System.Reflection;
 
 namespace SagiCore.Cadastros.Infrastructure
 {
@@ -17,11 +15,8 @@ namespace SagiCore.Cadastros.Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Connection");
-
             services.AddDbContext<CadastrosDbContext>(options =>
             {
-                options.UseNpgsql(connectionString);
             });
 
             // Registrar UnitOfWork para este contexto

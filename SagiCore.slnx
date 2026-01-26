@@ -8,7 +8,9 @@
   </Folder>
   <Folder Name="/src/Modules/" />
   <Folder Name="/src/Modules/Auth/">
+    <Project Path="src/Modules/Auth/SagiCore.Auth.Application/SagiCore.Auth.Application.csproj" Id="3f9a6076-6507-4b49-8727-664331685a01" />
     <Project Path="src/Modules/Auth/SagiCore.Auth.Domain/SagiCore.Auth.Domain.csproj" Id="5f903a76-4b80-4e79-87aa-0982901d9515" />
+    <Project Path="src/Modules/Auth/SagiCore.Auth.Infrastructure/SagiCore.Auth.Infrastructure.csproj" Id="5aaff050-c88b-49da-b550-fe0ae3a50a6d" />
   </Folder>
   <Folder Name="/src/Modules/Cadastros/">
     <Project Path="src/Modules/Cadastros/SagiCore.Cadastros.Application/SagiCore.Cadastros.Application.csproj" Id="f9b73876-a884-4ca0-96a5-354bde14cfa5" />

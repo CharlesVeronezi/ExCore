@@ -70,6 +70,15 @@ namespace SagiCore.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mail ou senha inválidos..
+        /// </summary>
+        public static string EMAIL_OR_PASSWORD_INVALID {
+            get {
+                return ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Produto já cadastrado.
         /// </summary>
         public static string PRODUCT_ALREADY_REGISTERED {
