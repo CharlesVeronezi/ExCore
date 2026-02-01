@@ -22,6 +22,14 @@ namespace SagiCore.Shared.Infrastructure.Persistence
             return await DbSet.FindAsync(new[] { id }, cancellationToken);
         }
 
+        /// <summary>
+        /// Busca entidade por chave composta
+        /// </summary>
+        public virtual async Task<TEntity?> GetByCompositeKeyAsync(object[] keyValues, CancellationToken cancellationToken = default)
+        {
+            return await DbSet.FindAsync(keyValues, cancellationToken);
+        }
+
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await DbSet.ToListAsync(cancellationToken);

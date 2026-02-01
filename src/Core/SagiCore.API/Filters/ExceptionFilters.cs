@@ -5,41 +5,64 @@ using SagiCore.Exceptions;
 using SagiCore.Exceptions.ExceptionsBase;
 using System.Net;
 
-namespace SagiCore.API.Filters
+namespace SagiCore.API.Filters;
+
+public class ExceptionFilter : IExceptionFilter
 {
-    public class ExceptionFilter : IExceptionFilter
+    private readonly ILogger<ExceptionFilter> _logger;
+
+    public ExceptionFilter(ILogger<ExceptionFilter> logger)
     {
-        public void OnException(ExceptionContext context)
+        _logger = logger;
+    }
+
+    public void OnException(ExceptionContext context)
+    {
+        if (context.Exception is SagiCoreException sagiException)
         {
-            if (context.Exception is SagiCoreException)
-            {
-                // Tratar exceções customizadas da aplicação
-                HandleProjectException(context);
-            }
-            else
-            {
-                // Tratar exceções genéricas
-                ThrowUnknowException(context);
-            }
+            HandleProjectException(context, sagiException);
+        }
+        else
+        {
+            ThrowUnknownException(context);
         }
 
-        private void HandleProjectException(ExceptionContext context)
-        {
-            if (context.Exception is ErrorOnValidationException)
-            {
-                var exception = context.Exception as ErrorOnValidationException;
+        context.ExceptionHandled = true;
+    }
 
+    private void HandleProjectException(ExceptionContext context, SagiCoreException exception)
+    {
+        switch (exception)
+        {
+            case ErrorOnValidationException validationEx:
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                context.Result = new BadRequestObjectResult(new ResponseErrorJson(exception.ErrorMessages));
-            }
-        }
+                context.Result = new BadRequestObjectResult(
+                    ApiResponse<object>.Fail("Erro de validação", 400, validationEx.ErrorMessages));
+                break;
 
-        private void ThrowUnknowException(ExceptionContext context)
+            case InvalidLoginException:
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                context.Result = new UnauthorizedObjectResult(
+                    ApiResponse<object>.Fail("Credenciais inválidas", 401));
+                break;
+
+            default:
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                context.Result = new BadRequestObjectResult(
+                    ApiResponse<object>.Fail(exception.Message, 400));
+                break;
+        }
+    }
+
+    private void ThrowUnknownException(ExceptionContext context)
+    {
+        _logger.LogError(context.Exception, "Erro não tratado: {Message}", context.Exception.Message);
+
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Result = new ObjectResult(
+            ApiResponse<object>.Fail(ResourceMessagesException.UNKNOWN_ERROR, 500))
         {
-
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            context.Result = new ObjectResult(new ResponseErrorJson(ResourceMessagesException.UNKNOWN_ERROR));
-
-        }
+            StatusCode = (int)HttpStatusCode.InternalServerError
+        };
     }
 }

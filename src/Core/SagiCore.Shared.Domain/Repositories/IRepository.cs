@@ -3,6 +3,7 @@
     public interface IReadRepository<TEntity> where TEntity : class
     {
         Task<TEntity?> GetByIdAsync(object id, CancellationToken cancellationToken = default);
+        Task<TEntity?> GetByCompositeKeyAsync(object[] keyValues, CancellationToken cancellationToken = default);
         Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<bool> ExistsAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
     }
