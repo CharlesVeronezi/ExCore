@@ -7,7 +7,6 @@ public interface IProdutoReadRepository : IReadRepository<Produto>
 {
     Task<Produto?> GetByCodigoAsync(string codpro, string subcod, CancellationToken cancellationToken = default);
     Task<bool> ExisteComMesmoCodigo(string codpro, string subcod, CancellationToken cancellationToken = default);
-    Task<string> GerarProximoCodigoAsync(CancellationToken cancellationToken = default);
 }
 
 public interface IProdutoWriteRepository : IWriteRepository<Produto>

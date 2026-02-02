@@ -6,9 +6,7 @@ namespace SagiCore.Cadastros.Application.Produtos.Register;
 
 public class RegisterProdutoValidator : AbstractValidator<RegisterProdutoCommand>
 {
-    public RegisterProdutoValidator(
-        ICategoriaRepository categoriaRepository,
-        IUnidadeRepository unidadeRepository)
+    public RegisterProdutoValidator()
     {
         // Validações síncronas de formato/tamanho
         RuleFor(x => x.Produto)
@@ -36,16 +34,5 @@ public class RegisterProdutoValidator : AbstractValidator<RegisterProdutoCommand
         RuleFor(x => x.CodigoCategoria)
             .GreaterThan(0)
             .WithMessage(ResourceMessagesException.CATEGORY_NOT_FOUND);
-
-        // Validações assíncronas de dependência
-        RuleFor(x => x.CodigoCategoria)
-            .MustAsync(async (codcat, ct) => 
-                await categoriaRepository.GetByIdAsync(codcat, ct) is not null)
-            .WithMessage(ResourceMessagesException.CATEGORY_NOT_FOUND);
-
-        RuleFor(x => x.Unidade)
-            .MustAsync(async (unidade, ct) => 
-                await unidadeRepository.ExisteAsync(unidade, ct))
-            .WithMessage(ResourceMessagesException.UNIT_NOT_FOUND);
     }
 }
