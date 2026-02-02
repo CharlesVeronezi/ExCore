@@ -61,6 +61,15 @@ namespace SagiCore.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Categoria não encontrada.
+        /// </summary>
+        public static string CATEGORY_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("CATEGORY_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O codpro não pode estar vazio..
         /// </summary>
         public static string CODPRO_EMPTY {
@@ -79,11 +88,38 @@ namespace SagiCore.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de operação inválida.
+        /// </summary>
+        public static string INVALID_OPERATION {
+            get {
+                return ResourceManager.GetString("INVALID_OPERATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NCM deve ter exatamente 8 caracteres.
+        /// </summary>
+        public static string NCM_SIZE_INVALID {
+            get {
+                return ResourceManager.GetString("NCM_SIZE_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Produto já cadastrado.
         /// </summary>
         public static string PRODUCT_ALREADY_REGISTERED {
             get {
                 return ResourceManager.GetString("PRODUCT_ALREADY_REGISTERED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produto não encontrado.
+        /// </summary>
+        public static string PRODUCT_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("PRODUCT_NOT_FOUND", resourceCulture);
             }
         }
         
@@ -106,11 +142,38 @@ namespace SagiCore.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unidade não encontrada.
+        /// </summary>
+        public static string UNIT_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("UNIT_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unidade deve ter entre 2 e 3 caracteres.
+        /// </summary>
+        public static string UNIT_SIZE_INVALID {
+            get {
+                return ResourceManager.GetString("UNIT_SIZE_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erro desconhecido..
         /// </summary>
         public static string UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuário não encontrado.
+        /// </summary>
+        public static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
             }
         }
     }
