@@ -10,7 +10,9 @@ namespace SagiCore.Cadastros.Application.Produtos.Register
         string Unidade,
         string TipoProduto,
         string Ncm,
+        bool Diverso,
         int CodigoCategoria,
+        string TipoPesquisa,
         string? CodigoReferencia1 = null,
         string? CodigoReferencia2 = null
     ) : IUseCase<ResponseRegisteredProdutoJson>;

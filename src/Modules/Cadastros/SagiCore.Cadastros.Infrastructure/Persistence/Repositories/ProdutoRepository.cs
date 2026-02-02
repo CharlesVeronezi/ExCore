@@ -2,9 +2,6 @@
 using SagiCore.Cadastros.Domain.Entities;
 using SagiCore.Cadastros.Domain.Repositories;
 using SagiCore.Shared.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SagiCore.Cadastros.Infrastructure.Persistence.Repositories
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SagiCore.Cadastros.Domain.Entities;
+using SagiCore.Cadastros.Infrastructure.Persistence.Configurations;
 using SagiCore.Shared.Application.Tenancy;
 using SagiCore.Shared.Infrastructure.Persistence;
 
@@ -27,6 +28,12 @@ namespace SagiCore.Cadastros.Infrastructure.Persistence
             }
 
             base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CadastrosDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

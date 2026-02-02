@@ -135,4 +135,25 @@
   <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
     <value>E-mail ou senha inválidos.</value>
   </data>
+  <data name="CATEGORY_NOT_FOUND" xml:space="preserve">
+    <value>Categoria não encontrada</value>
+  </data>
+  <data name="UNIT_NOT_FOUND" xml:space="preserve">
+    <value>Unidade não encontrada</value>
+  </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>Usuário não encontrado</value>
+  </data>
+  <data name="PRODUCT_NOT_FOUND" xml:space="preserve">
+    <value>Produto não encontrado</value>
+  </data>
+  <data name="INVALID_OPERATION" xml:space="preserve">
+    <value>Tipo de operação inválida</value>
+  </data>
+  <data name="NCM_SIZE_INVALID" xml:space="preserve">
+    <value>NCM deve ter exatamente 8 caracteres</value>
+  </data>
+  <data name="UNIT_SIZE_INVALID" xml:space="preserve">
+    <value>Unidade deve ter entre 2 e 3 caracteres</value>
+  </data>
 </root>

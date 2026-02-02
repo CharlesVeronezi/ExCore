@@ -5,9 +5,11 @@ using SagiCore.Auth.Application.UseCases;
 using SagiCore.Auth.Infrastructure.Security;
 using SagiCore.Cadastros.Application;
 using SagiCore.Cadastros.Infrastructure;
+using SagiCore.Communication.Responses;
 using SagiCore.Shared.Application;
 using SagiCore.Shared.Infrastructure;
 using System.Text;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,41 @@ builder.Services.AddAuthentication(config =>
         ValidateIssuer = false,
         ValidateAudience = false,
         ClockSkew = TimeSpan.Zero
+    };
+
+    // Adiciona tratamento para erros de autenticação
+    config.Events = new JwtBearerEvents
+    {
+        OnChallenge = context =>
+        {
+            // Impede a resposta padrão do middleware
+            context.HandleResponse();
+
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            context.Response.ContentType = "application/json";
+
+            var response = ApiResponse<object>.Fail(
+                message: "Token de autenticação não fornecido ou inválido",
+                status: 401
+            );
+
+            var jsonResponse = JsonSerializer.Serialize(response, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            return context.Response.WriteAsync(jsonResponse);
+        },
+        OnAuthenticationFailed = context =>
+        {
+            // Loga o erro de autenticação
+            var logger = context.HttpContext.RequestServices
+                .GetRequiredService<ILogger<Program>>();
+            
+            logger.LogWarning("Falha na autenticação: {Error}", context.Exception.Message);
+
+            return Task.CompletedTask;
+        }
     };
 });
 
@@ -57,7 +94,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SagiCore API v1");
+    });
 }
 
 app.UseHttpsRedirection();
