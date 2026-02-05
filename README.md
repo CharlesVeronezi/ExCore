@@ -1,119 +1,87 @@
-# Guia de Arquitetura e Desenvolvimento - SagiCore
+# SagiCore (ExCore)
 
-Este documento descreve a estrutura arquitetural do projeto, as motivações por trás das decisões técnicas e um guia passo-a-passo para a criação de novas funcionalidades.
+Sistema construído com arquitetura **Monólito Modular**, organizado em **Vertical Slices** e fundamentado nos princípios do **Domain-Driven Design (DDD)**.
+
+## Arquitetura
+
+### Monólito Modular
+
+O sistema é dividido em módulos de negócio independentes (ex: `Auth`, `Cadastros`, `Operacional`). Cada módulo possui sua própria lógica, dados e regras, mantendo alto nível de isolamento.
+
+**Vantagem:** Facilita a manutenção e permite que módulos específicos sejam extraídos para microsserviços no futuro sem necessidade de reescrever o sistema inteiro.
+
+### Vertical Slices
+
+Ao invés da arquitetura em camadas tradicional, o código é agrupado por **funcionalidade**. Cada caso de uso (ex: `RegisterProduto`) contém seu Handler, Request, Validator e Mapper em um único contexto.
+
+## Domain-Driven Design (DDD)
+
+O projeto segue as divisões de camadas do DDD:
+
+- **Domain (Núcleo):** Entidades, Value Objects e interfaces dos Repositórios. Camada pura, sem dependências de frameworks externos
+- **Application:** Orquestra os fluxos de negócio através de Use Cases, coordenando domínio e infraestrutura
+- **Infrastructure:** Implementações técnicas (EF Core, criptografia, provedores de token)
+- **Shared Kernel:** Abstrações e utilitários compartilhados entre módulos (notificações, multi-tenancy)
+
+## Segurança e Autenticação
+
+### JWT (JSON Web Tokens)
+
+Autenticação baseada em JWT para comunicação stateless e segura.
+
+**Geração do Token:**
+- No login, o sistema gera um token contendo Claims do usuário, incluindo o `IdEmpresa` (crucial para roteamento de banco de dados)
+- O `TokenProvider` assina o token com chave secreta, garantindo integridade
+
+**Validação e Roteamento:**
+1. Middleware do ASP.NET Core valida assinatura e expiração do token
+2. `UserContext` extrai o `IdEmpresa` das Claims
+3. `TenantService` usa este ID para determinar qual banco de dados executar a operação
+
+## Performance e Caching
+
+Sistema utiliza **Caching em Memória (`IMemoryCache`)** para otimizar o tempo de resposta em ambiente multi-tenant.
+
+### Otimização de Conexões
+
+- **Banco Central:** `AUTENTICA` armazena as strings de conexão de cada cliente
+- **Problema:** Consultar `AUTENTICA` em toda requisição geraria gargalo de performance
+- **Solução:** `TenantService` busca string de conexão no cache. Se não encontrar, consulta `AUTENTICA`, armazena no cache e utiliza
+- **Resultado:** Redução drástica na latência e carga sobre o banco de autenticação
+
+## Gestão de Dados e Migrações
+
+Gerenciamento centralizado no projeto **SagiCore.DbMigrator**.
+
+### FluentMigrator
+
+Utiliza **FluentMigrator** ao invés das migrações padrão do EF Core, permitindo:
+- Migrações mais flexíveis em C# ou SQL puro
+- Independência do mapeamento de classes do ORM
+
+### Migração Multi-tenancy
+
+O Console App do Migrator:
+1. Lê todos os bancos de dados ativos
+2. Itera sobre cada conexão
+3. Aplica versões pendentes sequencialmente
+4. Garante que todos os clientes estejam na mesma versão do esquema
+
+## Comunicação e Tratamento de Erros
+
+- **Padrão de Respostas:** Todas as respostas da API seguem formato padronizado (ex: `ResponseErrorJson`)
+- **Tratamento Global:** Utiliza `ExceptionFilters` que capturam erros de validação (FluentValidation) e erros de domínio, transformando-os em respostas HTTP apropriadas (400, 401, etc.)
 
 ---
 
-## 1. Visão Geral da Arquitetura
-
-O projeto segue os princípios da **Clean Architecture**, separando as responsabilidades em camadas distintas para garantir desacoplamento e testabilidade.
-
-### Estrutura das Camadas
-
-- **src/Backend/SagiCore.API (Camada de Apresentação)**
-  - **Responsabilidade:** Lidar com requisições HTTP, validação de entrada (formato), orquestração de dependências e retorno de respostas padronizadas. Não contém regras de negócio complexas.
-- **src/Backend/SagiCore.Application (Camada de Aplicação)**
-  - **Responsabilidade:** Orquestra o fluxo de dados. Recebe uma requisição, aplica regras de negócio, chama repositórios e devolve uma resposta. É isolada de detalhes externos (como banco de dados ou UI).
-- **src/Backend/SagiCore.Domain (Camada de Domínio)**
-  - **Responsabilidade:** Define as Entidades (como `Produto`), Regras de Negócio Core e as Interfaces (Contratos) que a infraestrutura deve implementar. Esta camada não depende de NINGUÉM.
-- **src/Backend/SagiCore.Infrastructure (Camada de Infraestrutura)**
-  - **Responsabilidade:** Implementar as interfaces do Domínio. Aqui reside o Entity Framework, acesso a disco, envio de e-mails, etc.
-- **src/Shared (Compartilhado)**
-  - **Responsabilidade:** Contém DTOs (Requests/Responses), Exceções personalizadas e recursos que trafegam entre as camadas sem violar a arquitetura.
-
----
-
-## 2. Pq da estrutura
-
-1.  **Independência de Frameworks:** O "coração" (Domínio) não sabe que existe Web API ou Postgres. Isso permite trocar o banco de dados ou a interface web com impacto mínimo nas regras de negócio.
-2.  **Testabilidade:** A injeção de dependência e o uso de interfaces (ex: `IProdutoWriteRepository`) permitem criar Mocks facilmente. Podemos testar o `RegistrarProdutoUseCase` sem precisar de um banco de dados real rodando (excelente para a pasta `tests` que ficará ao lado da `src`).
-3.  **SRP:** Cada `UseCase` faz apenas uma coisa (ex: RegistrarProduto). Isso evita aquelas classes "Service" gigantescas.
-4.  **Segurança e Consistência:** O uso do padrão **UnitOfWork** (`_unitOfWork.Commit()`) garante que todas as operações no banco sejam salvas em uma única transação ou nenhuma seja.
-
----
-
-## 3. Implementado
-
-### Injeção de Dependência
-
-Criei métodos de extensão para organizar a injeção de dependência por camada, mantendo o `Program.cs` limpo.
-
-- **Application**: `DependencyInjectionExtension.AddApplication()` registra os UseCases (ex: `RegistrarProdutoUseCase`).
-- **Infrastructure**: `DependencyInjectionExtension.AddInfrastructure()` registra o `DbContext` e os Repositórios.
-
-### Banco de Dados & Entity Framework
-
-- **ORM**: Entity Framework Core.
-- **Provedor**: PostgreSQL (`UseNpgsql`).
-- **Contexto**: `SagiCoreDbContext` configurado para aplicar configurações de mapeamento via `ApplyConfigurationsFromAssembly`.
-- **Repositórios**: Implementação segregada em `Read` e `Write` para otimização, além do padrão **UnitOfWork** para transações atômicas.
-
-### Tratamento de Exceções
-
-- **Filtros**: Um `ExceptionFilter` global intercepta exceções não tratadas e exceções de domínio (`SagiCoreException`), retornando respostas JSON padronizadas com os erros.
-
-### Próximos:
-
-**Migrations (Banco de Dados)**
-**Autenticação JWT (JSON Web Token)**
-
----
-
-## 4. Trilha
+## Trilha
 
 - [🗺️ Roadmap do Projeto](ROADMAP.md)
 
 ---
 
-## 5. Como criar um novo Endpoint
+## Tutorial
 
-_Passo a passo para adicionar uma nova funcionalidade (ex: Atualizar Produto)._
-
-### Passo 1: Defina os Contratos (Shared)
-
-Vá em `SagiCore.Communication`. Crie as classes que definem o que entra e o que sai da API.
-
-- Crie `RequestAtualizarProdutoJson.cs` (Entrada).
-- Crie `ResponseProdutoAtualizadoJson.cs` (Saída, se houver).
-
-### Passo 2: Defina a Interface do Repositório (Domain)
-
-Se precisar de uma nova operação no banco, defina o contrato primeiro.
-
-- Vá em `Domain/Repositories/IProdutoWriteRepository.cs`.
-- Adicione: `Task Update(Produto produto);`
-
-### Passo 3: Implemente a Infraestrutura (Infrastructure)
-
-Agora ensine o sistema a realizar a operação no banco.
-
-- Vá em `Infrastructure/DataAccess/Repositories/ProdutoRepository.cs`.
-- Implemente o método `Update` usando o `_dbcontext`.
-
-### Passo 4: Crie o Caso de Uso (Application) **(O passo mais importante)**
-
-- Vá em `Application/UseCases/Produto`. Crie a pasta `Atualizar`.
-- Crie a interface `IAtualizarProdutoUseCase.cs`.
-- Crie a classe `AtualizarProdutoUseCase.cs` implementando a interface.
-  - Injete `IProdutoWriteRepository` e `IUnitOfWork`.
-  - Lógica: Validar Request -> Buscar Produto (Repo) -> Atualizar campos -> Repo.Update() -> UnitOfWork.Commit().
-
-### Passo 5: Registre a Dependência (Application)
-
-Para que o sistema "conheça" sua nova classe.
-
-- Vá em `Itau.Application/DependencyInjectionExtension.cs` (ou similar).
-- Adicione: `services.AddScoped<IAtualizarProdutoUseCase, AtualizarProdutoUseCase>();`
-
-### Passo 6: Crie o Endpoint (API)
-
-- Vá em `API/Controllers/ProdutosController.cs`.
-- Crie o método HTTP (PUT/PATCH).
-- Injete o `IAtualizarProdutoUseCase` no método ou construtor.
-- Chame o `.Executar()` e retorne o Status Code adequado.
-
-### Passo 7: Testes
-
-- Na pasta de testes, crie um teste unitário para o seu UseCase, garantindo que a lógica funciona independente do banco de dados.
+- [Tutorial novo Endpoint](ENDPOINT.md)
 
 ---

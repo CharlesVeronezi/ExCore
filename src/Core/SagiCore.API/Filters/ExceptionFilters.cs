@@ -32,6 +32,13 @@ public class ExceptionFilter : IExceptionFilter
 
     private void HandleProjectException(ExceptionContext context, SagiCoreException exception)
     {
+        // Log estruturado com nível apropriado para exceções de negócio
+        _logger.LogWarning(
+            "Exceção de negócio: {ExceptionType} - {Message} | Path: {Path}",
+            exception.GetType().Name,
+            exception.Message,
+            context.HttpContext.Request.Path);
+
         switch (exception)
         {
             case ErrorOnValidationException validationEx:
@@ -41,6 +48,12 @@ public class ExceptionFilter : IExceptionFilter
                 break;
 
             case InvalidLoginException:
+                // Log de segurança para tentativas de login inválidas
+                _logger.LogWarning(
+                    "Tentativa de login inválida | IP: {IP} | UserAgent: {UserAgent}",
+                    context.HttpContext.Connection.RemoteIpAddress,
+                    context.HttpContext.Request.Headers.UserAgent);
+                
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 context.Result = new UnauthorizedObjectResult(
                     ApiResponse<object>.Fail("Credenciais inválidas", 401));
@@ -56,7 +69,13 @@ public class ExceptionFilter : IExceptionFilter
 
     private void ThrowUnknownException(ExceptionContext context)
     {
-        _logger.LogError(context.Exception, "Erro não tratado: {Message}", context.Exception.Message);
+        // Log completo com stack trace para erros inesperados
+        _logger.LogError(
+            context.Exception,
+            "Erro não tratado: {Message} | Path: {Path} | Method: {Method}",
+            context.Exception.Message,
+            context.HttpContext.Request.Path,
+            context.HttpContext.Request.Method);
 
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         context.Result = new ObjectResult(

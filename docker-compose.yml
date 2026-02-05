@@ -74,7 +74,31 @@ services:
         condition: service_healthy
     # Importante: Não reiniciar eternamente se acabar o trabalho
     restart: "no"
-    
+
+  sagicore-api:
+    build:
+      context: .
+      dockerfile: src/Core/SagiCore.API/Dockerfile
+    container_name: sagicore-api
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Jwt__SecretKey=${JWT_SECRET_KEY}
+      - ConnectionStrings__ConnectionAutentica=${CONNECTION_AUTENTICA}
+    volumes:
+      - sagicore-logs:/var/log/sagicore
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  sagicore-logs:
+    driver: local
+
 networks:
   my-network:
     driver: bridge
