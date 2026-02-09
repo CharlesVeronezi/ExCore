@@ -59,11 +59,9 @@ public class TenantLoggerMiddleware
 
     public async Task Invoke(HttpContext context, IUserContext userContext)
     {
-        // Tenta pegar o IdEmpresa. Se não estiver logado, será 0 ou null.
         var tenantId = "Anonymous";
         try
         {
-            // Atenção: Depende da implementação do seu UserContext não lançar exceção se não houver user
              if(context.User.Identity?.IsAuthenticated == true)
              {
                  var id = userContext.GetIdEmpresa();
