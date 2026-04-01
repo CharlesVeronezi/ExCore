@@ -111,7 +111,11 @@ try
         });
     }
 
-    app.UseHttpsRedirection();
+    if (!app.Environment.IsProduction())
+    {
+        app.UseHttpsRedirection();
+    }
+    
 
     // 2. Middlewares de Autenticação
     app.UseAuthentication();
